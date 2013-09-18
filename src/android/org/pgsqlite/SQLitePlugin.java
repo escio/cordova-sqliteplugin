@@ -463,7 +463,7 @@ public class SQLitePlugin extends CordovaPlugin
 									row.put(key, JSONObject.NULL);
 									break;
 								case Cursor.FIELD_TYPE_INTEGER:
-									row.put(key, cur.getInt(i));
+									row.put(key, cur.getLong(i));
 									break;
 								case Cursor.FIELD_TYPE_FLOAT:
 									row.put(key, cur.getFloat(i));
