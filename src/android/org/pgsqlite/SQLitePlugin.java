@@ -79,12 +79,6 @@ public class SQLitePlugin extends CordovaPlugin
 
 				this.closeDatabase(dbname);
 			}
-			else if (action.equals("delete")) {
-				JSONObject o = args.getJSONObject(0);
-				String dbname = o.getString("path");
-
-				this.deleteDatabase(dbname);
-			}
 			else if (action.equals("executePragmaStatement"))
 			{
 				String dbName = args.getString(0);
@@ -217,24 +211,6 @@ public class SQLitePlugin extends CordovaPlugin
 			mydb.close();
 			dbmap.remove(dbName);
 		}
-	}
-
-	/**
-	 * Delete a database.
-	 *
-	 * @param dbname
-	 *            The name of the database-NOT including its extension.
-	 *
-	 */
-	private void deleteDatabase(String dbname)
-	{
-		if (this.getDatabase(dbname) != null) this.closeDatabase(dbname);
-
-		File dbfile = this.cordova.getActivity().getDatabasePath(dbname + ".db");
-
-		Log.v("info", "delete sqlite db: " + dbfile.getAbsolutePath());
-
-		SQLiteDatabase.deleteDatabase(dbfile);
 	}
 
 	/**

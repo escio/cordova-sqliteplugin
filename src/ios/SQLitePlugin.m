@@ -246,27 +246,6 @@ static int base64_encode_blockend(char* code_out,
     [self.commandDelegate sendPluginResult:pluginResult callbackId: command.callbackId];
 }
 
--(void) delete: (CDVInvokedUrlCommand*)command
-{
-    CDVPluginResult* pluginResult = nil;
-    NSMutableDictionary *options = [command.arguments objectAtIndex:0];
-    
-    NSString *dbPath = [self getDBPath:[options objectForKey:@"path"]];
-    if(dbPath==NULL) {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"You must specify database path"];
-    } else {
-        if([[NSFileManager defaultManager]fileExistsAtPath:dbPath]) {
-            [[NSFileManager defaultManager]removeItemAtPath:dbPath error:nil];
-            [openDBs removeObjectForKey:dbPath];
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"DB deleted"];
-        } else {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"The database does not exist on that path"];
-        }
-    }
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-}
-
-
 -(void) backgroundExecuteSqlBatch: (CDVInvokedUrlCommand*)command
 {
     [self.commandDelegate runInBackground:^{
